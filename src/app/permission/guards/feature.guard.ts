@@ -1,31 +1,36 @@
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Injectable } from '@angular/core';
+// import { AuthService } from '../AuthService';
+import { SessionStorageService } from 'angular-web-storage';
+import { PermissionService } from 'src/app/Services/permission.service';
 
-import { select, Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
-import { User } from '../../models/user.model';
-import { PermissionService } from '../services/permission.service';
-import * as userSelectors from '../../state/user.selectors';
-
-@Injectable()
-export class FeatureGuard implements CanActivate {
-
-  constructor(protected store: Store,
-              protected router: Router,
-              protected permissionService: PermissionService) {
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuardService implements CanActivate {
+  path: ActivatedRouteSnapshot[];
+  route: ActivatedRouteSnapshot;
+  constructor(private _router: Router,
+              private sessionStorageService: SessionStorageService,
+              private routes: ActivatedRoute,
+              private permissionService: PermissionService) {
   }
+  //feature em cinza
+  async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    this.sessionStorageService.set("previousUrl", state.url);
+    if (this.sessionStorageService.get('UserRoleId') === null) {
+      this._router.navigate(['EPN']);
+      return true;
+    }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-    return this.store.pipe(
-      select(userSelectors.selectUser),
-      map((user: User) => {
-        if (!!user && this.permissionService.checkPermission(user, route.data.feature, route.data.permission)) {
-          return true;
-        }
-        return this.router.parseUrl('dashboard');
-      }),
-    );
+      if(this.permissionService.checkPermission(next.data.AccountDetails,next.data.feature, next.data.permission)){
+        return true;
+      }
+
+    else {
+      this._router.navigate(['EPN/unauthorized']);
+    }
   }
 }
+

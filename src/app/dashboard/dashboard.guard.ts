@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
-import { User } from '../models/user.model';
+import { User } from '../models/AccountDetails';
 import * as userSelectors from '../state/user.selectors';
 import * as userActions from '../state/user.actions';
 

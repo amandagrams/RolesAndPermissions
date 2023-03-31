@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
 import * as userActions from './user.actions';
-import { User } from '../models/user.model';
+import { User } from '../models/AccountDetails';
 
 export interface UserState {
   entity: User;

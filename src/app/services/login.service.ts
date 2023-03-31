@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { User } from '../models/user.model';
+import { User } from '../models/AccountDetails';
 import { Features } from '../permission/models/features.enum';
 import { Permission } from '../permission/models/permissions.enum';
 

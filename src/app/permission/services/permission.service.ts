@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { User } from '../../models/user.model';
+import { User } from '../../models/AccountDetails';
 import { Features } from '../models/features.enum';
 import { Permission } from '../models/permissions.enum';
 

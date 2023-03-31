@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
 
 import { LoginService } from '../services/login.service';
-import { User } from '../models/user.model';
+import { User } from '../models/AccountDetails';
 import * as userActions from './user.actions';
 
 @Injectable()
